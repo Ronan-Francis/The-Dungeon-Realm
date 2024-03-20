@@ -8,6 +8,7 @@ public class EnemyBehavior : MonoBehaviour
     public float moveSpeed = 5f; // Adjust the movement speed as needed
     public float wanderTime = 2f; // Time between new wander directions
     private GameObject player; // To keep a reference to the player
+    public GameObject spawner;
     private Vector3 lastPosition;
     private float lastMoveTime;
     private Rigidbody2D rb;
@@ -19,6 +20,8 @@ public class EnemyBehavior : MonoBehaviour
     public bool canMoveDown = true;
 
     public bool isTouchingWall;
+
+    private bool returningToSpawner = false;
 
     void Start()
     {
@@ -32,6 +35,12 @@ public class EnemyBehavior : MonoBehaviour
     void Update()
     {
         if (!isMoving) return; // Stop updating movement if the enemy has collided with a wall
+
+        if (returningToSpawner)
+        {
+            ReturnToSpawner();
+            return; // Skip the rest of the Update logic
+        }
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
@@ -97,8 +106,20 @@ public class EnemyBehavior : MonoBehaviour
             isTouchingWall = true;
             Vector3 hitPosition = transform.InverseTransformPoint(other.ClosestPoint(transform.position));
             UpdateMovementRestrictions(hitPosition, true);
+
+            // Immediately stop the enemy's movement when touching a wall
+            rb.velocity = Vector2.zero;
+        }
+        if (other.gameObject.CompareTag("Player"))
+        {
+           returningToSpawner = true;
+        }
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+           returningToSpawner = false;
         }
     }
+
 
     void OnTriggerExit2D(Collider2D other)
     {
@@ -131,5 +152,19 @@ public class EnemyBehavior : MonoBehaviour
         canMoveLeft = true;
         canMoveUp = true;
         canMoveDown = true;
+    }
+
+    void ReturnToSpawner()
+    {
+        if (!spawner) return; // Safety check
+
+        Vector2 directionToSpawner = (spawner.transform.position - transform.position).normalized;
+        rb.velocity = directionToSpawner * moveSpeed;
+
+        // Check if the enemy has reached the spawner or is very close to it
+        if (Vector3.Distance(transform.position, spawner.transform.position) < 0.5f) // Adjust the distance threshold as needed
+        {
+            //Destroy(gameObject); // Destroy the enemy or disable it, depending on your game's logic
+        }
     }
 }

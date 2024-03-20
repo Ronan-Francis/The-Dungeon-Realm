@@ -4,7 +4,7 @@ public class DungeonGeneratorPrefab : MonoBehaviour
 {
     // Prefabs for walls, floors, and spawners
     public GameObject wallPrefab;
-    public GameObject floorPrefab;
+    //public GameObject floorPrefab;
     public GameObject spawnerPrefab; // Spawner prefab
     public GameObject player;
 
@@ -88,8 +88,7 @@ public class DungeonGeneratorPrefab : MonoBehaviour
                             closestFloorPosition1 = position;
                         }
                     }
-                    instantiatedPrefab = Instantiate(floorPrefab, position, Quaternion.identity, transform);
-                    instantiatedPrefab.transform.localScale = floorScale; // Apply floor scale
+                    
                 }
                 else
                 {

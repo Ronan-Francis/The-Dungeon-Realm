@@ -30,6 +30,11 @@ public class Spawner1 : MonoBehaviour
 
     void SpawnObject()
     {
-        Instantiate(objectToSpawn, transform.position, Quaternion.identity); // Spawn the object at the spawner's position
+        GameObject newEnemy = Instantiate(objectToSpawn, transform.position, Quaternion.identity); // Spawn the object at the spawner's position
+        EnemyBehavior enemyBehavior = newEnemy.GetComponent<EnemyBehavior>();
+        if (enemyBehavior != null)
+        {
+            enemyBehavior.spawner = gameObject; // Set this spawner as the enemy's spawner
+        }
     }
 }

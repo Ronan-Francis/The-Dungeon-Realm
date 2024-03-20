@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2850209087279899304}
   m_Layer: 0
   m_Name: Spawner
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToSpawn: {fileID: 2709671235934310963, guid: 1eec8f3fb3c666a438203cd96e465b24, type: 3}
-  spawnRadius: 10
-  spawnInterval: 2
+  spawnRadius: 5
+  spawnInterval: 5
 --- !u!212 &2850209087279899304
 SpriteRenderer:
   m_ObjectHideFlags: 0

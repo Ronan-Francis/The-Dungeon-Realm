@@ -57,4 +57,23 @@ public class PlayerMovement : MonoBehaviour
 
         transform.Translate(move * speed * Time.deltaTime, Space.World);
     }
+
+    public void SetMovementEnabled(bool enabled)
+    {
+        if (enabled)
+        {
+            ResetMovementPermissions();
+        }
+        else
+        {
+            canMoveRight = canMoveLeft = canMoveUp = canMoveDown = false;
+        }
+    }
+
+    private void ResetMovementPermissions()
+    {
+        canMoveRight = canMoveLeft = canMoveUp = canMoveDown = true;
+    }
+
+
 }

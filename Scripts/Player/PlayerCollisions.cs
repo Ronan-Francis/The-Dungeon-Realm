@@ -4,12 +4,13 @@ using System.Collections;
 
 public class PlayerCollisions : MonoBehaviour
 {
-    private PlayerMovement playerMovement;
-    private Coroutine destroyCoroutine;
-    public GameObject floorTilePrefab;
+    private PlayerMovement playerMovement; // To control the player's movement
+    private Coroutine destroyCoroutine; // To keep track of the coroutine
+    public GameObject floorTilePrefab; // Prefab to replace walls with
 
     private void Start()
     {
+        // Ensure that the PlayerMovement component is attached to the same GameObject
         playerMovement = GetComponent<PlayerMovement>();
         if (playerMovement == null)
         {
@@ -17,32 +18,51 @@ public class PlayerCollisions : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    // Handle entering wall collisions
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Walls"))
+        if (other.CompareTag("Walls"))
         {
-            playerMovement.moveInput = Vector2.zero;
+            Debug.Log("Wall");
+            // Stop the player and mark them as touching a wall
+            playerMovement.SetMovementEnabled(false);
             playerMovement.isTouchingWall = true;
+
+            // Calculate collision position relative to the player
             Vector3 hitPosition = transform.InverseTransformPoint(other.ClosestPoint(transform.position));
 
-            // Start the coroutine and keep a reference to it
+            // Begin replacing the wall with a floor tile after a delay
             destroyCoroutine = StartCoroutine(ReplaceWithFloorTile(other.gameObject, playerMovement.breakTime));
 
+            // Update movement restrictions based on collision side
             UpdateMovementRestrictions(hitPosition, true);
+        }
+        else if (other.CompareTag("Item"))
+        {
+            // Attempt to get the Item component from the collided object
+            Item item = other.GetComponent<Item>();
+
+            // Check if the object actually has an Item component
+            if (item != null)
+            {
+                item.Pickup();
+            }
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+
+    // Handle exiting wall collisions
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Walls"))
+        if (other.CompareTag("Walls"))
         {
             playerMovement.isTouchingWall = false;
 
-            // If exiting the collider, stop the coroutine to prevent destruction
+            // Stop the replace coroutine if it's still running
             if (destroyCoroutine != null)
             {
                 StopCoroutine(destroyCoroutine);
-                destroyCoroutine = null; // Clear the reference
+                destroyCoroutine = null;
             }
 
             // Reset movement restrictions
@@ -50,73 +70,35 @@ public class PlayerCollisions : MonoBehaviour
         }
     }
 
+    // Update movement restrictions based on the collision's position
     private void UpdateMovementRestrictions(Vector3 hitPosition, bool restrict)
     {
         if (Mathf.Abs(hitPosition.x) > Mathf.Abs(hitPosition.y))
         {
-            if (hitPosition.x > 0) playerMovement.canMoveRight = !restrict;
-            else playerMovement.canMoveLeft = !restrict;
+            playerMovement.canMoveRight = hitPosition.x <= 0 || !restrict;
+            playerMovement.canMoveLeft = hitPosition.x > 0 || !restrict;
         }
         else
         {
-            if (hitPosition.y > 0) playerMovement.canMoveUp = !restrict;
-            else playerMovement.canMoveDown = !restrict;
+            playerMovement.canMoveUp = hitPosition.y <= 0 || !restrict;
+            playerMovement.canMoveDown = hitPosition.y > 0 || !restrict;
         }
     }
 
+    // Reset movement restrictions to allow free movement in all directions
     private void ResetMovementRestrictions()
     {
-        // Assuming default state is that the player can move freely in all directions.
-        playerMovement.canMoveRight = true;
-        playerMovement.canMoveLeft = true;
-        playerMovement.canMoveUp = true;
-        playerMovement.canMoveDown = true;
+        playerMovement.canMoveRight = playerMovement.canMoveLeft = playerMovement.canMoveUp = playerMovement.canMoveDown = true;
     }
 
-
-    // Coroutine to destroy the object after a delay
-    IEnumerator DestroyAfterTimeWithPerlinNoise(GameObject objectToDestroy, float delay, float animationDuration)
-    {
-        float startTime = Time.time;
-        float endTime = startTime + animationDuration;
-        Vector3 originalScale = objectToDestroy.transform.localScale;
-
-        // Animation loop
-        while (Time.time < endTime)
-        {
-            float elapsedTime = Time.time - startTime;
-            float fraction = elapsedTime / animationDuration;
-
-            // Generate Perlin noise based scale factor
-            float noise = Mathf.PerlinNoise(elapsedTime * 0.5f, 0) * 0.5f + 0.5f; // Adjust parameters as needed
-            Vector3 animatedScale = originalScale * noise * (1 - fraction); // Decrease size over time
-
-            objectToDestroy.transform.localScale = animatedScale;
-
-            yield return null; // Wait until next frame
-        }
-
-        // Wait for any remaining delay
-        if (delay > animationDuration)
-        {
-            yield return new WaitForSeconds(delay - animationDuration);
-        }
-
-        // Finally, destroy the object
-        Destroy(objectToDestroy);
-    }
-
-
-    IEnumerator ReplaceWithFloorTile(GameObject objectToReplace, float delay)
+    // Coroutine to replace the collided wall with a floor tile after a delay
+    private IEnumerator ReplaceWithFloorTile(GameObject objectToReplace, float delay)
     {
         yield return new WaitForSeconds(delay);
 
-        // Instantiate floor tile at the position and rotation of the object to replace
-        if (objectToReplace != null) // Check if the object hasn't been destroyed already
+        if (objectToReplace != null) // Ensure the object hasn't already been destroyed
         {
             Instantiate(floorTilePrefab, objectToReplace.transform.position, objectToReplace.transform.rotation);
-
-            // Destroy the original object
             Destroy(objectToReplace);
         }
     }
