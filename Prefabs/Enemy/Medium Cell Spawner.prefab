@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2850209087279899305}
   - component: {fileID: 2850209087279899304}
   m_Layer: 0
-  m_Name: Spawner
+  m_Name: Medium Cell Spawner
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb07f7ef0d11d3488b8d1bf36348c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 2709671235934310963, guid: 1eec8f3fb3c666a438203cd96e465b24, type: 3}
+  objectToSpawn: {fileID: 6492440483438402816, guid: 1bc4a67f10192304090b4beb9fb5257d, type: 3}
   spawnRadius: 5
-  spawnInterval: 5
+  spawnInterval: 10
 --- !u!212 &2850209087279899304
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4058470557158763938
+--- !u!1 &6492440483438402816
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6845168162962599621}
-  - component: {fileID: 7018661344009229245}
-  - component: {fileID: 8780191995160629025}
-  - component: {fileID: 8256309594800951989}
-  - component: {fileID: -6745137409777331763}
+  - component: {fileID: 6492440483438402826}
+  - component: {fileID: 6492440483438402821}
+  - component: {fileID: 6492440483438402820}
+  - component: {fileID: 6492440483438402823}
+  - component: {fileID: 6492440483438402822}
+  - component: {fileID: 6492440483438402817}
+  - component: {fileID: 6492440483438402827}
   m_Layer: 0
-  m_Name: Item_Arrow
-  m_TagString: Item
+  m_Name: MediumCellEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6845168162962599621
+--- !u!4 &6492440483438402826
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4058470557158763938}
-  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: -15.250306, y: -4.0767713, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
+  m_GameObject: {fileID: 6492440483438402816}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.1528, y: 0.4032, z: 0}
+  m_LocalScale: {x: 0.17, y: 0.17, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
---- !u!212 &7018661344009229245
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &6492440483438402821
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4058470557158763938}
+  m_GameObject: {fileID: 6492440483438402816}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -71,27 +73,27 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 918511301
-  m_SortingLayer: 2
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 103397cbd4626504ca0481fde68224fe, type: 3}
+  m_Sprite: {fileID: 8695513529235749877, guid: d89786d4d9ab51043810510df3f82b6d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &8780191995160629025
-BoxCollider2D:
+--- !u!70 &6492440483438402820
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4058470557158763938}
+  m_GameObject: {fileID: 6492440483438402816}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: f6470a7c06e213f41a0d7b9e08369835, type: 2}
@@ -99,40 +101,64 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
-    newSize: {x: 0.16, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
-  m_EdgeRadius: 0
---- !u!114 &8256309594800951989
+  m_Size: {x: 0.66, y: 0.66}
+  m_Direction: 0
+--- !u!114 &6492440483438402823
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4058470557158763938}
+  m_GameObject: {fileID: 6492440483438402816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09e0956db6288d8468832f40ae342ef4, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e16252abe1d07f43908bd7da8afa3ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  damage: 10
---- !u!50 &-6745137409777331763
+  timeToLiveInSecs: 5
+  sightRadius: 1
+  moveSpeed: 1
+  wanderTime: 2
+  spawner: {fileID: 0}
+  canMoveRight: 1
+  canMoveLeft: 1
+  canMoveUp: 1
+  canMoveDown: 1
+  isTouchingWall: 0
+--- !u!114 &6492440483438402822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6492440483438402816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b8b7fc44d8a89942a25626d1e54483d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 2709671235934310963, guid: 263f5c2142f11d240a0654990782f083, type: 3}
+--- !u!114 &6492440483438402817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6492440483438402816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 817a34f21de53984eb63de856a2a7899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+--- !u!50 &6492440483438402827
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4058470557158763938}
+  m_GameObject: {fileID: 6492440483438402816}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -141,8 +167,8 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: ef5d6856175ac8d4fb2813fcc59edb9f, type: 2}
+  m_Material: {fileID: 6200000, guid: f6470a7c06e213f41a0d7b9e08369835, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 6
+  m_Constraints: 0

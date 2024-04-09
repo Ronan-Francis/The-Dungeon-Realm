@@ -7,6 +7,7 @@ public class PlayerCollisions : MonoBehaviour
     private PlayerMovement playerMovement; // To control the player's movement
     private Coroutine destroyCoroutine; // To keep track of the coroutine
     public GameObject floorTilePrefab; // Prefab to replace walls with
+    public bool canDestroyWalls = false;
 
     private void Start()
     {
@@ -32,7 +33,7 @@ public class PlayerCollisions : MonoBehaviour
             Vector3 hitPosition = transform.InverseTransformPoint(other.ClosestPoint(transform.position));
 
             // Begin replacing the wall with a floor tile after a delay
-            destroyCoroutine = StartCoroutine(ReplaceWithFloorTile(other.gameObject, playerMovement.breakTime));
+            if(canDestroyWalls) destroyCoroutine = StartCoroutine(ReplaceWithFloorTile(other.gameObject, playerMovement.breakTime));
 
             // Update movement restrictions based on collision side
             UpdateMovementRestrictions(hitPosition, true);

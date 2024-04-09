@@ -7,6 +7,8 @@ public class EnemyBehavior : MonoBehaviour
     public float sightRadius = 5f; // Adjust the sight radius as needed
     public float moveSpeed = 5f; // Adjust the movement speed as needed
     public float wanderTime = 2f; // Time between new wander directions
+    public int enemyAttackDamage = 1;
+
     private GameObject player; // To keep a reference to the player
     public GameObject spawner;
     private Vector3 lastPosition;
@@ -109,14 +111,16 @@ public class EnemyBehavior : MonoBehaviour
 
             // Immediately stop the enemy's movement when touching a wall
             rb.velocity = Vector2.zero;
+            ReturnToSpawner();
         }
         if (other.gameObject.CompareTag("Player"))
         {
-           returningToSpawner = true;
+            returningToSpawner = true;
+            AttackPlayer();
         }
         if (other.gameObject.CompareTag("Enemy"))
         {
-           returningToSpawner = false;
+            returningToSpawner = false;
         }
     }
 
@@ -164,7 +168,16 @@ public class EnemyBehavior : MonoBehaviour
         // Check if the enemy has reached the spawner or is very close to it
         if (Vector3.Distance(transform.position, spawner.transform.position) < 0.5f) // Adjust the distance threshold as needed
         {
-            //Destroy(gameObject); // Destroy the enemy or disable it, depending on your game's logic
+            Destroy(gameObject); // Destroy the enemy or disable it, depending on your game's logic
+        }
+    }
+
+    private void AttackPlayer()
+    {
+        if (Vector3.Distance(player.transform.position, transform.position) <= 0.5f)
+        {
+            // Assume PlayerHealth script is attached to the player GameObject
+            player.GetComponent<PlayerHealth>().TakeDamage(enemyAttackDamage);
         }
     }
 }

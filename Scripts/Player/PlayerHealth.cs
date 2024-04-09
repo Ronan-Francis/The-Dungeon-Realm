@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public float health = 100f;
+    public float maxHealth = 100f;
+    public float health;
     public float knockbackStrength = 3f;
     public float knockbackDuration = 0.2f;
     private PlayerMovement playerMovement;
@@ -12,6 +13,7 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
+        health = maxHealth; // Initialize health to maxHealth at start
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -23,7 +25,7 @@ public class PlayerHealth : MonoBehaviour
             
             lastKnockbackDirection = knockbackDirection;
             StartCoroutine(ApplyKnockback(knockbackDirection, knockbackDuration));
-            health -= 10; // Adjust health reduction as needed
+            TakeDamage(10); // Example damage value
         }
     }
 
@@ -41,15 +43,6 @@ public class PlayerHealth : MonoBehaviour
         EnableMovement();
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            playerMovement.SetMovementEnabled(false);
-        }
-        //playerMovement.SetMovementEnabled(true);
-    }
-
     void DisableMovement()
     {
         playerMovement.canMoveRight = false;
@@ -64,5 +57,22 @@ public class PlayerHealth : MonoBehaviour
         playerMovement.canMoveLeft = true;
         playerMovement.canMoveUp = true;
         playerMovement.canMoveDown = true;
+    }
+
+    public void TakeDamage(float amount)
+    {
+        health -= amount;
+        health = Mathf.Max(health, 0); // Ensure health doesn't drop below 0
+        if (health <= 0)
+        {
+            // Handle player death here (e.g., trigger animation, game over screen)
+        }
+    }
+
+    public void Heal(float amount)
+    {
+        health += amount;
+        health = Mathf.Min(health, maxHealth); // Ensure health doesn't exceed maxHealth
+        // Optionally, trigger a healing effect or sound
     }
 }
