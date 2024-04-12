@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class WorldGenerator : MonoBehaviour
 {
-    // List of floor tile prefabs
+    // List of floor tile prefabs  public List<GameObject> floorTilePrefabs;
     public List<GameObject> floorTilePrefabs;
     public List<GameObject> housePrefabs;
     public GameObject pathTilePrefab;
     public GameObject[] edgePrefabs = new GameObject[8];
+    public List<GameObject> naturalElementsPrefabs; // Prefabs for sticks, rocks, trees, etc.
 
     public GameObject player;
 
@@ -47,10 +48,9 @@ public class WorldGenerator : MonoBehaviour
         }
 
         InstantiateTiles();
-        //PlaceEdges();
         PlaceHouses();
         CreatePathsToMidpoint();
-        //CreatePathBetweenHouses(housepositions);
+        PlaceNaturalElements();
     }
 
     void InstantiateTiles()
@@ -60,13 +60,12 @@ public class WorldGenerator : MonoBehaviour
         {
             if (child.CompareTag("Player"))
             {
-                continue; // Skip the player
+                continue;
             }
-            //Destroy(child.gameObject);
+            Destroy(child.gameObject);
         }
 
         System.Random pseudoRandom = useRandomSeed ? new System.Random(seed.GetHashCode()) : new System.Random();
-
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -77,14 +76,73 @@ public class WorldGenerator : MonoBehaviour
                     // Choose a random floor tile prefab from the list
                     int tileIndex = pseudoRandom.Next(floorTilePrefabs.Count);
                     GameObject tilePrefab = floorTilePrefabs[tileIndex];
-
                     GameObject instantiatedTile = Instantiate(tilePrefab, position, Quaternion.identity, transform);
                     instantiatedTile.transform.localScale = tileScale;
                 }
-                // Note: Walls or other features should be incorporated into the map generation logic
             }
         }
     }
+
+    void PlaceNaturalElements()
+    {
+        System.Random pseudoRandom = useRandomSeed ? new System.Random(seed.GetHashCode()) : new System.Random();
+        int areaSize = 3;  // Defines the area as 3x3
+        float chanceToPlaceElement = naturalElementsPrefabs.Count;
+
+        for (int x = 0; x < width; x += areaSize)
+        {
+            for (int y = 0; y < height; y += areaSize)
+            {
+                bool elementPlacedInArea = false;
+
+                // Check this area for existing elements
+                for (int subX = x; subX < x + areaSize && subX < width; subX++)
+                {
+                    for (int subY = y; subY < y + areaSize && subY < height; subY++)
+                    {
+                        if (map[subX, subY] > 0) // Assuming '1' is used for walls and '2' for houses
+                        {
+                            elementPlacedInArea = true;
+                            break;
+                        }
+                    }
+                    if (elementPlacedInArea)
+                    {
+                        break;
+                    }
+                }
+
+                // If no element is placed in this 3x3 area, consider placing one
+                if (!elementPlacedInArea)
+                {
+                    for (int subX = x; subX < x + areaSize && subX < width; subX++)
+                    {
+                        for (int subY = y; subY < y + areaSize && subY < height; subY++)
+                        {
+                            if (map[subX, subY] == 0) // Check for floor tiles
+                            {
+                                if (pseudoRandom.Next(0, 100) < chanceToPlaceElement)
+                                {
+                                    int elementIndex = pseudoRandom.Next(naturalElementsPrefabs.Count);
+                                    GameObject elementPrefab = naturalElementsPrefabs[elementIndex];
+                                    Vector3 pos = new Vector3(subX * prefabWidth, subY * prefabHeight, 0);
+                                    Instantiate(elementPrefab, pos, Quaternion.identity, transform);
+                                    map[subX, subY] = 4; // Marking the tile as occupied by a natural element
+                                    elementPlacedInArea = true;
+                                    break; // Stop after placing one element in this area
+                                }
+                            }
+                        }
+                        if (elementPlacedInArea)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     void PlaceHouses()
     {
@@ -146,23 +204,27 @@ public class WorldGenerator : MonoBehaviour
     bool IsPositionValidForHouse(int x, int y, GameObject housePrefab)
     {
         // Assuming the house prefab might occupy more than one tile, check the surrounding area
-        // For simplicity, let's assume a house occupies a 3x3 area centered on the position
-        int houseRadius = 1; // Adjust based on your house prefab size
+        int houseRadius = 3; // Adjust based on your house prefab size
 
-        for (int checkX = x - houseRadius; checkX <= x + houseRadius; checkX++)
+        // Expanded check to ensure houses do not touch
+        int checkRadius = houseRadius + 1; // Increase radius by one to create a gap between houses
+
+        for (int checkX = x - checkRadius; checkX <= x + checkRadius; checkX++)
         {
-            for (int checkY = y - houseRadius; checkY <= y + houseRadius; checkY++)
+            for (int checkY = y - checkRadius; checkY <= y + checkRadius; checkY++)
             {
                 // Ensure the position is within map bounds
                 if (!IsInMapBounds(checkX, checkY)) return false;
 
-                // Ensure the position is a floor tile and not already occupied
+                // Ensure the position is a floor tile and not already occupied by another house
                 if (map[checkX, checkY] != 0) return false;
             }
         }
 
+
         return true; // The house can be safely placed here
     }
+
 
     private bool HasNonFloorNeighbor(int x, int y)
     {

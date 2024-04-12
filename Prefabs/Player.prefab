@@ -34,7 +34,7 @@ Transform:
   m_GameObject: {fileID: 7026591569987115122}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalScale: {x: 0.16, y: 0.16, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementAction: {fileID: -6431038123681144462, guid: 329d5d2a3d4f82f49a1e77bf930cc419, type: 3}
-  speed: 5
+  speed: 1
   moveInput: {x: 0, y: 0}
   canMoveRight: 1
   canMoveLeft: 1
@@ -203,9 +203,9 @@ MonoBehaviour:
   scrollActionReference: {fileID: -2709987127688211346, guid: 329d5d2a3d4f82f49a1e77bf930cc419, type: 3}
   itemObjects: []
   playerTransform: {fileID: 7026591569987115121}
-  itemOffset: {x: 1, y: 0, z: 0}
-  itemScale: 0.5
-  nullItemObject: {fileID: 0}
+  itemOffset: {x: 0.1, y: 0, z: 0}
+  itemScale: 2
+  nullItemObject: {fileID: 839898726902230286, guid: 9ff27eeee86155045946377463331cc7, type: 3}
   useItemActionReference: {fileID: -4035655502545902358, guid: 329d5d2a3d4f82f49a1e77bf930cc419, type: 3}
 --- !u!95 &269071563365718737
 Animator:
