@@ -18,6 +18,7 @@ public class InventorySystem : MonoBehaviour
     private int selectedItemIndex = 0; // Currently selected item index
     private Image selectionBorder;
     public GameObject nullItemObject;
+<<<<<<< HEAD
 
     [SerializeField] private InputActionReference useItemActionReference;
 
@@ -26,6 +27,8 @@ public class InventorySystem : MonoBehaviour
     {
         UseSelectedItem();
     }
+=======
+>>>>>>> 8ad74047893e2afc59c46bd5f345b8211468a3d7
 
     private void Awake()
     {
@@ -48,6 +51,46 @@ public class InventorySystem : MonoBehaviour
         {
             Debug.Log("Mismatch between inventory slots and item objects lengths.");
         }
+<<<<<<< HEAD
+=======
+    }
+
+    private void Update()
+    {
+        UpdateItemObjectsFromChildren();
+    }
+
+    private void UpdateItemObjectsFromChildren()
+    {
+        // Check if the player has any children
+        if (playerTransform.childCount != itemObjects.Length)
+        {
+            // Resize the itemObjects array to match the number of children
+            itemObjects = new GameObject[playerTransform.childCount];
+
+            // Populate itemObjects with player's children
+            for (int i = 0; i < playerTransform.childCount; i++)
+            {
+                itemObjects[i] = playerTransform.GetChild(i).gameObject;
+            }
+
+            // Since the inventory items have changed, update the UI accordingly
+            //UpdateSelectionBorder();
+            // Optionally, call other methods if needed to reflect changes in the UI or logic
+        }
+    }
+
+    public void InitializeItemObjectsArray()
+    {
+        // Ensure the itemObjects array has the same length as inventorySlots
+        itemObjects = new GameObject[inventorySlots.Length];
+
+        // Populate the array with nulls
+        for (int i = 0; i < itemObjects.Length; i++)
+        {
+            itemObjects[i] = nullItemObject;
+        }
+>>>>>>> 8ad74047893e2afc59c46bd5f345b8211468a3d7
     }
 
     private void Update()
@@ -169,6 +212,30 @@ public class InventorySystem : MonoBehaviour
         selectionBorder.enabled = inventorySlots[selectedItemIndex].sprite != emptySprite;
 
         UpdateSelectedItemObject();
+<<<<<<< HEAD
+=======
+    }
+
+    private void UpdateSelectedItemObject()
+    {
+        HideAllItemObjects();
+        if (selectedItemIndex >= 0 && selectedItemIndex < itemObjects.Length && inventorySlots[selectedItemIndex].sprite != emptySprite)
+        {
+            GameObject selectedItemObject = itemObjects[selectedItemIndex];
+            selectedItemObject.SetActive(true);
+            selectedItemObject.transform.position = playerTransform.position + itemOffset;
+            selectedItemObject.transform.localScale = Vector3.one * itemScale;
+        }
+    }
+
+
+    private void HideAllItemObjects()
+    {
+        foreach (var itemObject in itemObjects)
+        {
+            itemObject.SetActive(false);
+        }
+>>>>>>> 8ad74047893e2afc59c46bd5f345b8211468a3d7
     }
 
     private void UpdateSelectedItemObject()

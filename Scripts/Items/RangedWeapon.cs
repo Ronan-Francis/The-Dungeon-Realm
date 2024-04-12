@@ -7,12 +7,15 @@ public class RangedWeapon : Item
     private int currentAmmo;
     private float lastAttackTime = 0f; // Declare lastAttackTime to track the cooldown
 
+<<<<<<< HEAD
     // Reference to the projectile prefab
     public GameObject projectilePrefab;
 
     // Fire point from where the projectile will be instantiated
     public Transform firePoint;
 
+=======
+>>>>>>> 8ad74047893e2afc59c46bd5f345b8211468a3d7
     public RangedWeapon()
     {
         currentAmmo = ammoCapacity;
@@ -32,6 +35,7 @@ public class RangedWeapon : Item
         Debug.Log($"Shooting with {name}: {damage} damage.");
         currentAmmo--;
         durability--;
+<<<<<<< HEAD
 
         // Instantiate the projectile at the fire point's position and orientation
         if (projectilePrefab && firePoint)
@@ -45,12 +49,18 @@ public class RangedWeapon : Item
             }
         }
 
+=======
+>>>>>>> 8ad74047893e2afc59c46bd5f345b8211468a3d7
         if (durability <= 0)
         {
             Debug.Log($"{name} has broken.");
         }
     }
 
+<<<<<<< HEAD
+=======
+    // Specific Enhance method for ranged weapons could improve damage, ammo capacity, etc.
+>>>>>>> 8ad74047893e2afc59c46bd5f345b8211468a3d7
     public override void Enhance()
     {
         damage += 2; // Example of a simple enhancement for ranged weapons

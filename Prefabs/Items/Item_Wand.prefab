@@ -131,4 +131,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 1
+<<<<<<< HEAD
   attackCooldown: 1
+=======
+>>>>>>> 8ad74047893e2afc59c46bd5f345b8211468a3d7

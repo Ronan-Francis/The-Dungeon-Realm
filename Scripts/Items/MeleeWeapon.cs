@@ -8,11 +8,15 @@ public class MeleeWeapon : Item
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
+<<<<<<< HEAD
     public float attackCooldown = 1f; // Cooldown time in seconds between attacks
+=======
+>>>>>>> 8ad74047893e2afc59c46bd5f345b8211468a3d7
 
     public override void Use()
     {
         // Ensure the weapon can only be used if enough time has passed based on attackSpeed
+<<<<<<< HEAD
         // and if it is not currently attacking (cooldown)
         if (Time.time - lastAttackTime >= attackCooldown / attackSpeed && durability > 0)
         {
@@ -35,10 +39,20 @@ public class MeleeWeapon : Item
         // Rotate the item back by 90 degrees around the Z-axis to its original orientation
         transform.Rotate(0, 0, 90);
 
+=======
+        if (Time.time - lastAttackTime >= 1f / attackSpeed && durability > 0)
+        {
+            Attack();
+        }
+>>>>>>> 8ad74047893e2afc59c46bd5f345b8211468a3d7
     }
 
     private void Attack()
     {
+<<<<<<< HEAD
+=======
+        lastAttackTime = Time.time; // Update lastAttackTime to the current time
+>>>>>>> 8ad74047893e2afc59c46bd5f345b8211468a3d7
         Debug.Log($"Attacking with {name}: {damage} damage.");
         durability--; // Decrease durability with each attack
         if (durability <= 0)
@@ -52,6 +66,10 @@ public class MeleeWeapon : Item
         {
             enemy.GetComponent<EnemyHealth>().TakeDamage(damage);
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8ad74047893e2afc59c46bd5f345b8211468a3d7
     }
 
     // Optionally override the Enhance method for specific enhancement behavior

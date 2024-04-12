@@ -127,5 +127,8 @@ MonoBehaviour:
   attackSpeed: 1
   damage: 8
   ammoCapacity: 30
+<<<<<<< HEAD
   projectilePrefab: {fileID: 4058470557158763938, guid: 5694e1fd672b71947888f46406604586, type: 3}
   firePoint: {fileID: 7030853971347462193}
+=======
+>>>>>>> 8ad74047893e2afc59c46bd5f345b8211468a3d7

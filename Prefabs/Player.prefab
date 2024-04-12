@@ -203,10 +203,15 @@ MonoBehaviour:
   scrollActionReference: {fileID: -2709987127688211346, guid: 329d5d2a3d4f82f49a1e77bf930cc419, type: 3}
   itemObjects: []
   playerTransform: {fileID: 7026591569987115121}
+<<<<<<< HEAD
   itemOffset: {x: 0.1, y: 0, z: 0}
   itemScale: 2
   nullItemObject: {fileID: 839898726902230286, guid: 9ff27eeee86155045946377463331cc7, type: 3}
   useItemActionReference: {fileID: -4035655502545902358, guid: 329d5d2a3d4f82f49a1e77bf930cc419, type: 3}
+=======
+  itemOffset: {x: 1, y: 0, z: 0}
+  itemScale: 0.5
+>>>>>>> 8ad74047893e2afc59c46bd5f345b8211468a3d7
 --- !u!95 &269071563365718737
 Animator:
   serializedVersion: 3
